@@ -104,4 +104,29 @@ public class EstudiantesController : Controller
         TempData["Mensaje"] = $"Estudiante {estudiante.NombreCompleto} actualizado correctamente.";
         return RedirectToAction(nameof(Index));
     }
+
+    public IActionResult Delete(int id)
+    {
+        var estudiante = _repositorio.ObtenerPorId(id);
+        if (estudiante is null)
+        {
+            return NotFound();
+        }
+
+        return View(estudiante);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        var estudiante = _repositorio.ObtenerPorId(id);
+        if (estudiante is null || !_repositorio.Eliminar(id))
+        {
+            return NotFound();
+        }
+
+        TempData["Mensaje"] = $"Estudiante {estudiante.NombreCompleto} eliminado correctamente.";
+        return RedirectToAction(nameof(Index));
+    }
 }
