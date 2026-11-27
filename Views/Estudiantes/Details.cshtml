@@ -1,0 +1,31 @@
+@model GestionEstudiantes.Models.Estudiante
+@{
+    ViewData["Title"] = "Detalle del estudiante";
+}
+
+<h1 class="h3">Detalle del estudiante</h1>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Matricula)</dt>
+    <dd class="col-sm-9">@Model.Matricula</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.NombreCompleto)</dt>
+    <dd class="col-sm-9">@Model.NombreCompleto</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Correo)</dt>
+    <dd class="col-sm-9">@Model.Correo</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Carrera)</dt>
+    <dd class="col-sm-9">@Model.Carrera</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Indice)</dt>
+    <dd class="col-sm-9">@Model.Indice.ToString("0.00")</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.FechaIngreso)</dt>
+    <dd class="col-sm-9">@Model.FechaIngreso.ToString("dd/MM/yyyy")</dd>
+</dl>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+</div>
