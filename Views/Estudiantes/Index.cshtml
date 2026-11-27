@@ -1,0 +1,56 @@
+@model IEnumerable<GestionEstudiantes.Models.Estudiante>
+@{
+    ViewData["Title"] = "Estudiantes";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Estudiantes</h1>
+</div>
+
+@if (TempData["Mensaje"] is string mensaje)
+{
+    <div class="alert alert-success">@mensaje</div>
+}
+
+<form asp-action="Index" method="get" class="row g-2 mb-3">
+    <div class="col-sm-8 col-md-6">
+        <input type="text" name="buscar" value="@ViewData["Buscar"]" class="form-control" placeholder="Buscar por matrícula, nombre o carrera" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-primary">Buscar</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Limpiar</a>
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No hay estudiantes para mostrar.</p>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Matrícula</th>
+                <th>Nombre completo</th>
+                <th>Carrera</th>
+                <th>Índice</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model)
+            {
+                <tr>
+                    <td>@e.Matricula</td>
+                    <td>@e.NombreCompleto</td>
+                    <td>@e.Carrera</td>
+                    <td>@e.Indice.ToString("0.00")</td>
+                    <td class="text-end">
+                        <a asp-action="Details" asp-route-id="@e.Id" class="btn btn-sm btn-outline-info">Detalle</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
