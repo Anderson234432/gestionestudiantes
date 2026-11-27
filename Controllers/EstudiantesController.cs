@@ -65,4 +65,43 @@ public class EstudiantesController : Controller
         TempData["Mensaje"] = $"Estudiante {estudiante.NombreCompleto} registrado correctamente.";
         return RedirectToAction(nameof(Index));
     }
+
+    public IActionResult Edit(int id)
+    {
+        var estudiante = _repositorio.ObtenerPorId(id);
+        if (estudiante is null)
+        {
+            return NotFound();
+        }
+
+        return View(estudiante);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(int id, Estudiante estudiante)
+    {
+        if (id != estudiante.Id)
+        {
+            return BadRequest();
+        }
+
+        if (_repositorio.ExisteMatricula(estudiante.Matricula, estudiante.Id))
+        {
+            ModelState.AddModelError(nameof(Estudiante.Matricula), "Ya existe otro estudiante con esa matrícula.");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View(estudiante);
+        }
+
+        if (!_repositorio.Actualizar(estudiante))
+        {
+            return NotFound();
+        }
+
+        TempData["Mensaje"] = $"Estudiante {estudiante.NombreCompleto} actualizado correctamente.";
+        return RedirectToAction(nameof(Index));
+    }
 }
