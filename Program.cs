@@ -1,4 +1,9 @@
+using System.Globalization;
 using GestionEstudiantes.Data;
+
+var cultura = new CultureInfo("es-DO");
+CultureInfo.DefaultThreadCurrentCulture = cultura;
+CultureInfo.DefaultThreadCurrentUICulture = cultura;
 
 var builder = WebApplication.CreateBuilder(args);
 
