@@ -1,4 +1,5 @@
 using GestionEstudiantes.Data;
+using GestionEstudiantes.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestionEstudiantes.Controllers;
@@ -39,5 +40,29 @@ public class EstudiantesController : Controller
         }
 
         return View(estudiante);
+    }
+
+    public IActionResult Create()
+    {
+        return View(new Estudiante());
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(Estudiante estudiante)
+    {
+        if (_repositorio.ExisteMatricula(estudiante.Matricula))
+        {
+            ModelState.AddModelError(nameof(Estudiante.Matricula), "Ya existe un estudiante con esa matrícula.");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View(estudiante);
+        }
+
+        _repositorio.Agregar(estudiante);
+        TempData["Mensaje"] = $"Estudiante {estudiante.NombreCompleto} registrado correctamente.";
+        return RedirectToAction(nameof(Index));
     }
 }
