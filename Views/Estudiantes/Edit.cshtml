@@ -1,0 +1,21 @@
+@model GestionEstudiantes.Models.Estudiante
+@{
+    ViewData["Title"] = "Editar estudiante";
+}
+
+<h1 class="h3">Editar estudiante</h1>
+<hr />
+
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+    <input type="hidden" asp-for="Id" />
+    <partial name="_Formulario" model="Model" />
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
